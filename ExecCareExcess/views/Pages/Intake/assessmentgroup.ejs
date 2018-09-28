@@ -1,0 +1,91 @@
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <header>
+
+    </header>
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-3 left-spacer">
+
+            </div>
+
+            <div class="col-xs-12 col-xl-6 col-lg-offset-3">
+
+                <div class="loader" style="display:none"></div>
+                <div class="fset">
+
+
+                    <div class="row justify-content-center">
+                        <img src="/ExecCareMobile/public/images/Assessment.jpg" class="formimg" />
+                    </div>
+
+
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <form id="inputForm" action="/ExecCareMobile/AssessmentCategories/submit/<%= category %>"
+                            method="post">
+                            <%- html %>
+                        </form>
+                        <div class="d-inline-block">
+                            <button type="button" id="submitbutton" class="btn btn-primary" onclick="submit()">Submit</button>
+                        </div>
+
+                        <div class="d-inline-block">
+                            <button onclick="goBack()" type="button" class="btn btn-danger">Back</button>
+                        </div>
+
+                    </div>
+
+
+                    <br>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function submit() {
+            console.log("Submitting the form");
+
+            $('#inputForm').validate();
+
+            $("#1").rules("add", {
+
+                required: true,
+                minlength: 1,
+                messages: {
+                    required: "<p style='color:red'>*Please enter name<p>"
+                }
+
+            });
+
+            const formValid = $("#inputForm").valid();
+
+            if (formValid) {
+                $('.loader').show();
+                $("#inputForm").submit();
+            }
+        }
+
+        function goBack() {
+            $('.loader').show();
+            window.history.back();
+        }
+
+
+    </script>
+
+</body>
+
+</html>

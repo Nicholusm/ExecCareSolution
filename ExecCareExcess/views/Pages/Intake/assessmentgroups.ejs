@@ -1,0 +1,93 @@
+<html lang="en">
+
+<head>
+        <% include ../partials/head %>
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+
+
+    <div class="container-fluid">
+
+        <div class="row justify-content-center">
+
+
+            <div class="col-xs-12 col-sm-12 col-lg-8">
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-lg-12 col-lg-offset-3">
+
+                        <div class="loader" style="display:none"></div>
+
+                        <div class="fsetcat">
+                            <div class="row justify-content-center col-xs-12 col-sm-12 col-lg-8">
+                                <img src="/ExecCareMobile/public/images/Assessment.jpg" class="catimg" />
+                            </div>
+
+                            <div class="col-col-xs-12 col-sm-12  col-lg-12">
+                                <ul class="text-success list-group ">
+                                    <% menuItems.forEach(function(item) { %>
+                                        <li class="list-group-item">
+                                            <img class="block" src="/ExecCareMobile/public/images/block1.png" />
+                                            <a class="category" href="AssessmentCategories/<%=item.Id%>">
+                                                <%= item.Name %>
+                                            </a>
+
+                                            <div class="completedform">
+
+                                                <% if (item.completed_sections) { %>
+                                                    <img class="myimg" />
+                                                    <% } else { %>
+
+                                                        <% } %>
+                                            </div>
+                                        </li>
+                                        <% }); %>
+                                </ul>
+
+
+                            </div>
+                            <br>
+                            <div class="otherinfo">Should you experience any problems completing this online questionnaire, please call Exec|care
+                                on 0860 12 EXEC or email
+                                <a href="mailto:bookings@exec-care.co.za?subject=Exec|Care"> bookings@exec-care.co.za</a>
+                            </div>
+                            <br>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <script> 
+            $(document).ready(function () {
+                console.log("Document is ready");
+                function checkCat() {
+
+                }
+                $('.myimg').attr('src', "/ExecCareMobile/public/images/flagGreen.jpg");
+
+            });
+            $(".category").click(function () {
+                $('.loader').show();
+            });
+
+            function goBack() {
+
+                window.history.back();
+            }
+        </script>
+</body>
+
+</html>

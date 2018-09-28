@@ -1,0 +1,114 @@
+<html lang="en">
+
+<head>
+    <% include ../../partials/Excess/head %>
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+
+
+    <div class="container-fluid">
+
+        <div class="row justify-content-center">
+
+
+            <div class="col-xs-12 col-sm-12 col-lg-8">
+                <div class="row">
+                    <div class="col-3">
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-lg-12 col-lg-offset-3">
+
+                        <div class="loader" style="display:none"></div>
+
+                        <div class="fset">
+                            <div class="row justify-content-center col-xs-12 col-sm-12 col-lg-8">
+                                <img src="/ExeccareProfessionalServices/public/images/Assessment.jpg" class="catimg" />
+                            </div>
+
+                            <div class="col-col-xs-12 col-sm-12  col-lg-12">
+                                <ul class="text-success list-group ">
+                                    <% menuItems.forEach(function(item) { %>
+                                    <li class="list-group-item">
+
+                                        <img class="block" src="/ExeccareProfessionalServices/public/images/block1.png" />
+
+                                        <% if (item.Editable) { %>
+                                        <a class="category" href="/ExeccareProfessionalServices/AssessmentCategories/<%=currentMember%>/<%=item.ID%>">
+                                            <%= item.Name %>
+                                        </a>
+
+                                        <% } else { %>
+                                        <span>
+                                            <%= item.Name %>
+                                        </span>
+                                        <% } %>
+
+                                        <div class="completedform">
+
+                                            <% if (item.Editable) { %>
+                                            <i class="fas fa-edit"></i>
+
+                                            <% }%>
+
+                                            <% if (item.Completed) { %>
+                                            <img class="myimg" />
+
+                                            <% } else { %>
+
+                                            <% } %>
+
+
+                                        </div>
+                                    </li>
+                                    <% }); %>
+                                </ul>
+
+
+                            </div>
+                            <br>
+                            <div class="otherinfo">Should you experience any problems completing this online
+                                questionnaire, please call Exec|care
+                                on 0860 12 EXEC or email
+                                <a href="mailto:bookings@exec-care.co.za?subject=Exec|Care"> bookings@exec-care.co.za</a>
+                            </div>
+                            <br>
+                            <div id="summernote">Hello Summernote</div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+
+
+                $('#summernote').summernote();
+
+                function checkCat() {
+
+                }
+                $('.myimg').attr('src', "/ExeccareProfessionalServices/public/images/flagGreen.jpg");
+
+            });
+            $(".category").click(function () {
+                $('.loader').show();
+            });
+
+            function goBack() {
+
+                window.history.back();
+            }
+        </script>
+</body>
+
+</html>

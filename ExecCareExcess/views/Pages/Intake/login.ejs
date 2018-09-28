@@ -1,0 +1,147 @@
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+
+    <header>
+
+    </header>
+
+    <main>
+
+
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3  fset">
+
+                    <div class="row">
+
+                        <img src="/ExecCareMobile/public/images/Assessment.jpg" class="assmentimg" />
+                        <div class="loader" style="display:none"></div>
+
+                    </div>
+                    <div class="header">
+                        Please enter your OTP to proceed to the questionnaire
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="loginform">
+                            <div class="loader" style="display:none"></div>
+                            <form class="form-inline" method="post">
+
+                                <div class="form-group mx-sm-3 mb-2">
+
+                                    <input type="hidden" name="memguid" class="form-control" id="memguid" value="" />
+                                </div>
+
+                                <div class="form-group mx-sm-3 mb-2">
+
+                                    <input id="otp" name="otp" type="text" class="form-control" placeholder="OTP" />
+                                </div>
+
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <button id="login" class="btn btn-danger" type="button">Submit</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div id="errors"></div>  
+
+
+                    </div>
+
+                    <div class="otpnumber">
+                        <p>Resend OTP to mobile...</p>
+                    </div>
+
+                    <div class="form-group mx-sm-3 mb-2 otpnumber">
+                        <button class="btn btn-danger" type="button">Resend OTP</button>
+                    </div>
+
+
+                    <div class="help">
+                        <b>Should you experience any problems please call 0860 12 EXEC (3932) or email</b>
+                        <a href="mailto:bookings@exec-care.co.za?subject=Exec|Care">bookings@exec-care.co.za</a>
+                    </div>
+                    <div class="row">
+                        <div class="col-4 offset-md-4">
+
+                            <div id="error"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <script>
+
+        $(document).ready(function () {
+
+            const memguid = window.location.pathname.split('/').pop();
+
+            $("#memguid").val(memguid);
+
+            document.getElementById("login").addEventListener("click", Login);
+
+            function Login() {
+                const memguid = $("#memguid").val();
+                const otp = $("#otp").val();
+
+                if (!memguid) {
+                    // No Memguid
+
+                } else if (!otp) {
+
+                    //No OTP
+
+                } else {
+
+
+                    $('.loader').show();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/ExecCareMobile/login",
+                        data: { memguid: memguid, otp: otp },
+                        success: success
+                    });
+
+                    function success(result) {
+
+                        $('.loader').hide();
+                        console.log(result);
+                        if (result.error) {
+                            console.log("Setting Error : ", result.message);
+                            $("#error").html(result.message);
+                        } else {
+                            console.log("Correct OTP");
+
+                            window.location.href = '/ExecCareMobile/AssessmentCategories'
+                        }
+                    }
+                }
+            }
+
+
+        });
+
+    </script>
+
+</body>
+
+</html>
