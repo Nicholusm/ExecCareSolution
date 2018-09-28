@@ -261,7 +261,7 @@ app.get('/AssessmentCategories/:memberguid/:catid', sessionChecker, async (req, 
         var runner = new sqlRunner();
 
         let data = await runner.GetSectionById(req.params.catid);
-      
+
 
         const memberInfo = await runner.GetMemberID(req.params.memberguid);
         const memberid = memberInfo.recordset[0].memberid;

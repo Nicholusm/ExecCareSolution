@@ -30,8 +30,8 @@ function FormStorage() {
     const InsertCheckAnswers = async (formField, memberid, assessmentid, questionid) => {
 
         let data = await sqlquery.GetOptionByQuestionId(questionid);
-        const hasoptionid = data[0].length;
-        const optionid = hasoptionid > 0 ? data[0][0].OptionId : 0;
+        const hasoptionid = data.recordset[0].length;
+        const optionid = hasoptionid > 0 ? data.recordset[0].OptionId : 0;
 
         if (optionid != 0) {
             let SavememberValues = await sqlquery.SaveLookExecToProfiler(memberid, assessmentid, questionid);
@@ -118,8 +118,8 @@ function FormStorage() {
 
         let data = await sqlquery.GetOptionByQuestionId(questionId);
 
-        const hasoptionid = data[0].length;
-        const optionid = hasoptionid > 0 ? data[0][0].OptionId : 0;
+        const hasoptionid = data.recordset[0].length;
+        const optionid = hasoptionid > 0 ? data.recordset[0].OptionId : 0;
 
 
         if (optionid != 0) {
