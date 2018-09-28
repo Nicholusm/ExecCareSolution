@@ -130,11 +130,7 @@ function HtmlBuilder() {
 
             let htmlValue = await sqlquery.GetAnswerByQuestionId(questionId, memberId);
 
-
-
             const answerSheet = await sqlquery.GetCheckedBox(assessmentId, questionId);
-
-
 
             if (htmlValue.length > 0) {
 
@@ -174,10 +170,7 @@ function HtmlBuilder() {
 
         } else {
 
-
         }
-
-
 
     }
 
@@ -190,8 +183,6 @@ function HtmlBuilder() {
         const hasoptionid = data.recordset[0];
 
         const optionid = hasoptionid > 0 ? data.recordset[0].OptionId : 0;
-
-
 
         let htmlField = "";
         let value = "";
@@ -216,7 +207,6 @@ function HtmlBuilder() {
 
             } else {
 
-
             }
 
         } else {
@@ -239,7 +229,6 @@ function HtmlBuilder() {
                     htmlField += `<label class="radio-inline form-control"><input id="${questionId}" value="${option.ID}" type="radio" name="${questionId}">${option.AnswerHtml}</label>`;
                 }
             }
-
             return htmlField;
         }
     }
@@ -397,8 +386,6 @@ function HtmlBuilder() {
             }
 
             const pageHtml = await this.BuildHtmlPage(displaylist, memberId, assessmentId);
-
-            //console.log(pageHtml);
 
             return pageHtml;
 
