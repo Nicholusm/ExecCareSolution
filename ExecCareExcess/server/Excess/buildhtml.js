@@ -94,7 +94,7 @@ function HtmlBuilder() {
 
         //return `<label for='${questionId}'></label> <textarea class='form-control' name='${questionId}' id='${questionId}'>${value}</textarea>`;
 
-        return `<label for='${questionId}'></label> <textarea class='form-control' name='${questionId}' id='${questionId}'>${value}</textarea>`;
+        return `<label for='${questionId}'></label> <textarea class='form-control' name='${questionId}' id='summernote'>${value}</textarea>`;
     }
 
     const NumericField = async (memberid, assessmentId, questionId) => {

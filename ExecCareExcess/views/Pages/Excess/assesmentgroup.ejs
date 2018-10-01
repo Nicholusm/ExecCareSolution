@@ -28,7 +28,8 @@
 
 
                     <div class="col-xs-12 col-sm-12 col-lg-12">
-                        <form id="inputForm" action="/ExeccareProfessionalServices/AssessmentCategories/submit/<%= memberid %>/<%= category %>" method="post">
+                        <form id="inputForm" action="/ExeccareProfessionalServices/AssessmentCategories/submit/<%= memberid %>/<%= category %>"
+                            method="post">
                             <%- html %>
                         </form>
                         <div class="d-inline-block">
@@ -47,6 +48,14 @@
     </div>
 
     <script>
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Hello bootstrap 4',
+                tabsize: 2,
+                height: 100
+            })
+
+        });
         function submit() {
             console.log("Submitting the form");
 
