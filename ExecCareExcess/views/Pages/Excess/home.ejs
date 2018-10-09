@@ -118,7 +118,7 @@
 
                                     <button type="button" class="btn btn-primary">Add</button>
                                     <button type="button" class="btn btn-success" data-toggle="modal" v-on:click="CancelBooking()"
-                                        data-target="#cancelbooking">Cancel
+                                        data-target="#cancelbookingModal">Cancel
                                         booking</button>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reschedulemodal"
                                         v-on:click="Reschedule()">Reschedule</button>
@@ -169,7 +169,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal fade" id="cancelbooking" tabindex="-1" role="dialog" aria-labelledby="cancelbooking"
+                    <div class="modal fade" id="cancelbookingModal" tabindex="-1" role="dialog" aria-labelledby="cancelbookingModal"
                         aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document ">
                             <div class="modal-content" style="width:106% !important">
@@ -191,13 +191,23 @@
                                             the booking and not simply change the booking. For changing booking click
                                             on "back" and then on Edit
                                         </p>
+
                                     </div>
+
+                                    <div class="execdetails">
+                                        {{Name}} {{Surname}}
+                                    </div>
+                                    <div class="execdetails">
+                                        <p>Delete the booking on {{startdate}} {{starttime}}</p>
+                                    </div>
+
 
                                 </div>
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-success" v-on:click="CancelBooking()">Ok</button>
-                                    <button type="button" class="btn btn-dange" v-on:click="CancelBooking()">Back</button>
+                                    <button type="button" class="btn btn-dange" data-toggle="modal" data-target="#exampleModalCenter"
+                                        v-on:click="BacktoExecutive()">Back</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
 
@@ -273,7 +283,10 @@
                 displayrecords: 100,
                 pages: [],
                 currentPage: 1,
-                totalPages: 0
+                totalPages: 0,
+                Name: '',
+                Surname: ''
+
             },
             watch: {
 
@@ -340,33 +353,30 @@
 
                 },
                 Reschedule: function () {
-
                     $('#exampleModalCenter').modal('hide');
                     $('#datepicker').datepicker({
                         uiLibrary: 'bootstrap4'
                     });
                     $('#timepicker1').timepicker();
-
                     $('#timepicker1').val(this.starttime);
-
                     $('#datepicker').val(this.startingdate);
-
                 },
                 UpDateTime: function () {
-
                     const newDate = $('#datepicker').val();
-
                     console.log(newDate);
                 },
-                CancelBooking: function () {
+                CancelBooking: function (exec) {
                     $('#exampleModalCenter').modal('hide');
-
+                    this.Name = this.exec.Name;
+                    this.Surname = this.exec.Surname;
+                },
+                BacktoExecutive: function () {
+                    $('#cancelbookingModal').modal('hide');
                 }
 
             }
 
         });
-
 
 
         function w3_open() {
