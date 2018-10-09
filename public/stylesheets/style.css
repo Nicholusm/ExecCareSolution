@@ -1,0 +1,53 @@
+.fset {
+    border: thin solid grey;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.subheadings {
+    background-color: #9B0000;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    padding: 5px;
+    margin-top: 15px;
+    border-radius: 10px;
+    color: white;
+}
+
+.assmentimg {
+    width: 852px;
+    padding-right: auto;
+    padding-left: auto;
+    border-radius: 10px;
+}
+
+.loginform {
+    padding-left: 325px;
+    padding-top: 20px;
+}
+
+.completedform {
+    margin-left: 393px;
+}
+
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: .4;
+    background: url('/public/images/ajax-loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+}
+
+.otherinfo {
+    padding-left: 20px;
+}
+
+#error {
+    color: red;
+}
+
+.catimg {
+    padding-left: 50px;
+}
