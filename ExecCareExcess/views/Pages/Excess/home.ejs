@@ -117,7 +117,9 @@
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-primary">Add</button>
-                                    <button type="button" class="btn btn-success">Cancel booking</button>
+                                    <button type="button" class="btn btn-success" data-toggle="modal" v-on:click="CancelBooking()"
+                                        data-target="#cancelbooking">Cancel
+                                        booking</button>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reschedulemodal"
                                         v-on:click="Reschedule()">Reschedule</button>
                                     <button type="button " class="btn btn-info">Goto booking</button>
@@ -167,10 +169,49 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal fade" id="cancelbooking" tabindex="-1" role="dialog" aria-labelledby="cancelbooking"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document ">
+                            <div class="modal-content" style="width:106% !important">
+                                <div class="modal-header">
+                                    <h5 class="modal-title " id="exampleModalLongTitle">Cancel Booking</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true ">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body ">
+                                    <div class="conrolpanelimg">
+                                        <img src="/ExeccareProfessionalServices/public/images/CancelBooking.jpg " />
+                                    </div>
+
+
+                                    <div class="controlbooking">
+                                        <p>
+                                            This process can not be reverted. Please make 100% sure you want to delete
+                                            the booking and not simply change the booking. For changing booking click
+                                            on "back" and then on Edit
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-success" v-on:click="CancelBooking()">Ok</button>
+                                    <button type="button" class="btn btn-dange" v-on:click="CancelBooking()">Back</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
             </div>
+
+        </div>
         </div>
 
     </main>
@@ -193,19 +234,19 @@
             let pages = [];
             const totalPages = Math.ceil(recordCount / 100);
 
-            const pagesLeft = totalPages - currentPage; 
+            const pagesLeft = totalPages - currentPage;
 
             console.log(totalPages);
             console.log(pagesLeft);
 
             if (totalPages > 1) {
-                
+
                 let newPageNum = currentPage;
 
                 pages.push(currentPage);
 
-                for (let index = 1; index < pagesLeft + 1; index++) {                    
-                    
+                for (let index = 1; index < pagesLeft + 1; index++) {
+
                     pages.push(newPageNum + index);
                 }
 
@@ -266,7 +307,7 @@
                 },
                 GetExecutives: function (page, search) {
 
-                     let searchVal = search ? search : '-';
+                    let searchVal = search ? search : '-';
 
                     axios.get('/ExeccareProfessionalServices/getExecutives/' + this.currentPage + "/" + searchVal)
 
@@ -316,6 +357,10 @@
                     const newDate = $('#datepicker').val();
 
                     console.log(newDate);
+                },
+                CancelBooking: function () {
+                    $('#exampleModalCenter').modal('hide');
+
                 }
 
             }
