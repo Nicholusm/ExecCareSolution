@@ -1,0 +1,116 @@
+<html lang="en">
+
+<head>
+    <% include ../../partials/Bookings/head %>
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <main>
+        <main>
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-xs-12 col-sm-12 col-lg-6 col-lg-offset-3  fset">
+                        <div class="row">
+
+                            <img src="/ExecCareBookings/public/images/Login.jpg" class="assmentimg" />
+                            <div class="loader" style="display:none"></div>
+
+                        </div>
+
+                        <div class="row">
+
+
+                            <div class="loginform">
+                                <div class="loader" style="display:none"></div>
+
+
+                                <form method="post" id="login_form">
+                                    <div class="form-group">
+                                        <label for="UserName">
+                                            <strong>UserName</strong>
+                                        </label>
+                                        <input id="username" type="Text" class="form-control" placeholder="UserName">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Password">
+                                            <strong>Password</strong>
+                                        </label>
+                                        <input id="password" type="password" class="form-control" placeholder="Password">
+                                    </div>
+
+                                    <button id="login" type="button" class="btn btn-danger">Login</button>
+
+                                </form>
+                                <div id="error"></div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+
+        <footer>
+
+        </footer>
+        <script>
+            $(document).ready(function () {
+
+                document.getElementById("login").addEventListener("click", Login);
+
+                function Login() {
+
+                    const username = $("#username").val();
+                    const password = $("#password").val();
+
+                    if (username == '') {
+                        alert("Please type in your username!");
+                        return;
+                    }
+                    else if (password == '') {
+                        alert("Please type in your password!");
+                        return;
+                    }
+                    else {
+                        $.ajax({
+                            type: "POST",
+                            url: "/ExecCareBookings/login",
+                            data: {
+                                username: username,
+                                password: password
+
+                            },
+                            success: success
+
+
+                        });
+
+                    }
+                    function success(result) {
+
+                        if (result.completed) {
+                            alert(result.completed);
+                            window.location.href = '/Bookings/mainpage';
+                            $('.loader').show();
+                        } else {
+                            console.log("Setting Error : ", result.message);
+                            $("#error").html(result.message);
+                        }
+                    }
+                }
+
+            });
+        </script>
+</body>
+
+</html>
