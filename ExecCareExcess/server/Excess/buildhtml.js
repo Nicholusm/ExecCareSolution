@@ -101,7 +101,7 @@ function HtmlBuilder() {
 
         let data = await sqlquery.GetNumericAnswered(assessmentId, questionId)
 
-        if (data.length > 0) {
+        if (data.recordset.length > 0) {
             const record = data.recordset[0];
 
             return `<label class='col-sm-2 col-form-label' for='${questionId}'></label><input type='number' class='form-control' id='${questionId}' name='${questionId}'  value='${record.AnserValue}' class='required'/>`
@@ -119,7 +119,7 @@ function HtmlBuilder() {
     const CheckBoxFunction = async (memberId, assessmentId, questionId) => {
 
         let data = await sqlquery.GetOptionByQuestionId(questionId);
-        const hasoptionid = data.recordset[0];
+        const hasoptionid = data.recordset.length;
 
         let htmlField = "";
         let value = "";
@@ -132,18 +132,18 @@ function HtmlBuilder() {
 
             const answerSheet = await sqlquery.GetCheckedBox(assessmentId, questionId);
 
-            if (htmlValue.length > 0) {
+            if (htmlValue.recordset.length > 0) {
 
-                for (let key in htmlValue[0]) {
+                for (let key in htmlValue.recordset) {
 
-                    const HtmlValueItem = htmlValue[0][key];
+                    const HtmlValueItem = htmlValue.recordset[key];
 
                     let doesExistsInAnswerSheet = false;
 
-                    const option = htmlValue[key];
+                    const option = htmlValue.recordset[key];
 
-                    for (let answerKey in answerSheet[0]) {
-                        const answer = answerSheet[0][answerKey];
+                    for (let answerKey in answerSheet.recordset) {
+                        const answer = answerSheet.recordset[answerKey];
 
                         if (HtmlValueItem.ID === answer.ID) {
                             doesExistsInAnswerSheet = true;
@@ -164,19 +164,22 @@ function HtmlBuilder() {
                 return htmlField;
 
 
-            } else {
+            }
+            else {
 
             }
 
         } else {
 
+
         }
+
 
     }
 
     const RadioBoxFuction = async (memberId, assessmentId, questionId) => {
 
-        console.log(memberId);
+
 
         let data = await sqlquery.GetOptionByQuestionId(questionId);
 
@@ -189,12 +192,13 @@ function HtmlBuilder() {
 
         if (optionid != 0) {
             let data = await sqlquery.GetLookupAnswerByOptionId(optionid, memberId);
+            console.log("**********************************************", data);
 
             if (data.recordset[0].length > 0) {
 
                 for (const key in data[0]) {
 
-                    const option = data.recordset[key];
+                    const option = data.recordsets[0][key];
 
                     if (option.ValueId === option.SelectedId) {
                         htmlField += `<label class="radio-inline form-control"><input  id="${questionId}" value="${option.ValueId}" type="radio" name="${questionId}" checked="checked">${option.DisplayName}</label>`;
@@ -212,15 +216,14 @@ function HtmlBuilder() {
         } else {
             const questionAnswers = await sqlquery.GetAnswerByQuestionId(questionId, memberId);
 
-            console.log(questionAnswers.recordsets[0]);
 
             const mydata = questionAnswers.recordsets[0];
+
+
 
             for (const key in mydata) {
 
                 const option = mydata[key];
-
-                console.log("Option To Use : ", option);
 
                 if (option.ID === option.SelectedId) {
                     htmlField += `<label class="radio-inline form-control"><input id="${questionId}" value="${option.ID}" type="radio" name="${questionId}" checked="checked">${option.AnswerHtml}</label>`;
@@ -237,26 +240,40 @@ function HtmlBuilder() {
         let value = "";
         let data = await sqlquery.GetOptionByQuestionId(questionId);
 
+
+
+
         const hasoptionid = data.recordset[0];
+
 
         const optionid = hasoptionid > 0 ? data.recordset[0].OptionId : 0;
 
+
         let htmlValue = await sqlquery.GetAnswerByQuestionId(questionId, memberId);
+        console.log(htmlValue.recordsets[0]);
+
+
 
         htmlField += `<select name=${questionId} id=' ${questionId}' class='form-control'>`;
 
-        for (let key in htmlValue[0]) {
+        for (let key in htmlValue.recordsets[0]) {
 
-            const option = htmlValue[0][key];
+            const option = htmlValue.recordsets[0][key];
+
 
             if (option.ID == option.SelectedId) {
                 htmlField += `<option value=${option.ID} name= ${questionId} selected='selected'>${option.AnswerHtml} </option>`;
+
+
             } else {
                 htmlField += `<option value=${option.ID} name= ${questionId} >  ${option.AnswerHtml} </option>`;
+
             }
         }
 
         htmlField += "</select>";
+
+
 
         return htmlField;
 

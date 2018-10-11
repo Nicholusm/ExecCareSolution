@@ -333,7 +333,7 @@ function SqlRunner() {
             .input('PageSize', sql.Int, pagesize)
             .input('search', sql.NVarChar, search)
 
-            .execute('sp_Phase2_CallRegMembers2_1');
+            .execute('ec_sp_Phase2_CallRegMembers2_1');
 
         let data = await result2;
 
