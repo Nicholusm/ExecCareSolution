@@ -355,6 +355,17 @@ function SqlRunner() {
 
     }
 
+    //Deleting the date
+    this.DeleteDate = async (startdatetime, memberid) => {
+        let results2 = await pool.getPool().request()
+            .input("Startdatetime", sql.DateTime, startdatetime)
+            .input("Memberid", sql.Int, memberid)
+
+            .execute("ec_DeleteDate");
+        let data = await results2;
+        return data;
+    }
+
     this.GetDates = async (memguid) => {
         let result2 = await pool.getPool().request()
             .input('memguid', sql.NVarChar, memguid)

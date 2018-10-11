@@ -223,6 +223,15 @@ app.get('/getDates/:memguid', async (req, res, next) => {
     res.send({ startDateTime: startdatetime, startTime: starttime, startingDate: startingDate });
 });
 
+app.post("deleteDate/:startdatetime/:memberid", async (req, res, next) => {
+
+    const runner = new sqlRunner();
+    const data = await runner.DeleteDate(startdatetime, req.params.memberid);
+    console.log(data);
+
+
+});
+
 app.get('/AssessmentCategories/:id', sessionChecker, async (req, res, next) => {
 
     let user = req.session.user;

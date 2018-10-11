@@ -199,6 +199,9 @@
                                     </div>
                                     <div class="execdetails">
                                         <p>Delete the booking on {{startdate}} {{starttime}}</p>
+                                        <P>
+                                            Memberid is {{Memberid}}
+                                        </P>
                                     </div>
 
 
@@ -285,7 +288,9 @@
                 currentPage: 1,
                 totalPages: 0,
                 Name: '',
-                Surname: ''
+                Surname: '',
+                Memberid: '',
+                startdatetime:''
 
             },
             watch: {
@@ -352,6 +357,7 @@
                         });
 
                 },
+
                 Reschedule: function () {
                     $('#exampleModalCenter').modal('hide');
                     $('#datepicker').datepicker({
@@ -361,14 +367,25 @@
                     $('#timepicker1').val(this.starttime);
                     $('#datepicker').val(this.startingdate);
                 },
+
                 UpDateTime: function () {
                     const newDate = $('#datepicker').val();
                     console.log(newDate);
                 },
+
                 CancelBooking: function (exec) {
                     $('#exampleModalCenter').modal('hide');
+
                     this.Name = this.exec.Name;
                     this.Surname = this.exec.Surname;
+                    this.Memberid = this.exec.MemberID;
+                    this.startdatetime = this.exec.StartDateTime;
+                    
+
+                    axios.get('/ExeccareProfessionalServices/deleteDate/' + this.Memberid + "/" + this.startdatetime)
+                        .then(response => {
+
+                        });
                 },
                 BacktoExecutive: function () {
                     $('#cancelbookingModal').modal('hide');
