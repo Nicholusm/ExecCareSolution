@@ -49,7 +49,7 @@
 }
 
 .catimg {
-    padding-left: 50px;
+    padding-left: 156px;
 }
 
 .w3-teal {
@@ -146,4 +146,9 @@
 .gj-timepicker-md [role=right-icon] {
     margin-top: 5px;
     margin-right: 10px;
+}
+
+.formimg {
+    width: 720px;
+    height: 110px;
 }
