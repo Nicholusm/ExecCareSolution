@@ -64,7 +64,7 @@ const sessionChecker = (req, res, next) => {
 
 
     if (Boolean(req.session.user) === false) {
-        res.redirect('/ExeccareProfessionalServices/login');
+        res.redirect('/ExecCareBookings/login');
     } else {
         next();
     }
@@ -74,7 +74,7 @@ app.get('/login/', (req, res) => {
 
     console.log("Getting Login");
 
-    res.render('Pages/Excess/login', {
+    res.render('Pages/Bookings/login', {
 
     });
 
@@ -317,4 +317,4 @@ app.post('/AssessmentCategories/submit/:memberguid/:categoryid', sessionChecker,
 
 
 
-app.listen(3104, () => console.log('Example app listening on port 3102!'));
+app.listen(3104, () => console.log('Example app listening on port 3104!'));
