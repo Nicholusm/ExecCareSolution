@@ -290,7 +290,7 @@
                 Name: '',
                 Surname: '',
                 Memberid: '',
-                startdatetime:''
+                startdatetime: ''
 
             },
             watch: {
@@ -380,9 +380,9 @@
                     this.Surname = this.exec.Surname;
                     this.Memberid = this.exec.MemberID;
                     this.startdatetime = this.exec.StartDateTime;
-                    
 
-                    axios.get('/ExeccareProfessionalServices/deleteDate/' + this.Memberid + "/" + this.startdatetime)
+
+                    axios.post('/ExeccareProfessionalServices/deleteDate/' + this.startdatetime + "/" + this.Memberid)
                         .then(response => {
 
                         });
@@ -407,6 +407,7 @@
             document.getElementById("mySidebar").style.display = "none";
             document.getElementById("openNav").style.display = "inline-block";
         }
+        
     </script>
 </body>
 

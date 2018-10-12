@@ -358,7 +358,7 @@ function SqlRunner() {
     //Deleting the date
     this.DeleteDate = async (startdatetime, memberid) => {
         let results2 = await pool.getPool().request()
-            .input("Startdatetime", sql.DateTime, startdatetime)
+            .input("Startdatetime", sql.DateTime2, startdatetime)
             .input("Memberid", sql.Int, memberid)
 
             .execute("ec_DeleteDate");

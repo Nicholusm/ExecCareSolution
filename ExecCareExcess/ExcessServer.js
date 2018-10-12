@@ -191,6 +191,20 @@ app.get('/adminhome/', async (req, res, next) => {
 });
 
 
+app.post('/deleteDate/:startdatetime/:memberid', async (req, res, next) => {
+
+    const runner = new sqlRunner();
+
+    var startDate = moment(req.params.startdatetime).format('YYYY-M-DD HH:mm:ss')
+    console.log("*******************************", req.params.startdatetime);
+    console.log("My startDate is", startDate);
+
+    const data = await runner.DeleteDate(req.params.startdatetime, req.params.memberid);
+    console.log(data);
+
+
+});
+
 //Getting Executives
 app.get('/getExecutives/:page/:search', async (req, res, next) => {
 
@@ -223,14 +237,7 @@ app.get('/getDates/:memguid', async (req, res, next) => {
     res.send({ startDateTime: startdatetime, startTime: starttime, startingDate: startingDate });
 });
 
-app.post("deleteDate/:startdatetime/:memberid", async (req, res, next) => {
 
-    const runner = new sqlRunner();
-    const data = await runner.DeleteDate(startdatetime, req.params.memberid);
-    console.log(data);
-
-
-});
 
 app.get('/AssessmentCategories/:id', sessionChecker, async (req, res, next) => {
 
@@ -322,8 +329,5 @@ app.post('/AssessmentCategories/submit/:memberguid/:categoryid', sessionChecker,
 
     res.redirect("/AssessmentCategories/" + req.params.memberguid);
 });
-
-
-
 
 app.listen(3102, () => console.log('Example app listening on port 3102!'));
