@@ -10,6 +10,7 @@ app.set('view engine', 'ejs');
 
 let assessmentStorage = require('./server/Excess/formstorage');
 let htmlBuilder = require('./server/Excess/buildhtml');
+let utilities = require('./server/core/utilities')
 
 app.use('/public', express.static('public'));
 
@@ -18,8 +19,6 @@ app.use(bodyparser.urlencoded({
     extended: true
 }));
 
-var nocache = require('nocache')
-app.use(nocache())
 var moment = require('moment');
 var _ = require('underscore');
 var ejs = require('ejs');
@@ -195,18 +194,14 @@ app.post('/deleteDate/:startdatetime/:memberid', async (req, res, next) => {
 
     const runner = new sqlRunner();
 
-    var startDate = moment(req.params.startdatetime).format('YYYY-M-DD HH:mm:ss')
-    console.log("*******************************", req.params.startdatetime);
-    console.log("My startDate is", startDate);
-
-    const data = await runner.DeleteDate(req.params.startdatetime, req.params.memberid);
-    console.log(data);
-
+    var startDate = moment(req.params.startdatetime).format('YYYY-MM-DD HH:mm:ss');
+   
+    const data = await runner.DeleteDate(startDate, req.params.memberid);
 
 });
 
 //Getting Executives
-app.get('/getExecutives/:page/:search', async (req, res, next) => {
+app.get('/getExecutives/:page/:search',async (req, res, next) => {
 
     var runner = new sqlRunner();
 
@@ -222,19 +217,25 @@ app.get('/getExecutives/:page/:search', async (req, res, next) => {
 });
 
 
-app.get('/getDates/:memguid', async (req, res, next) => {
+app.get('/getDates/:memguid',utilities.nocache, async (req, res, next) => {
 
     const runner = new sqlRunner();
 
     const data = await runner.GetDates(req.params.memguid);
 
-    let date = data.recordset[0].StartDate;
-    let time = data.recordset[0].StartTime;
-    const startdatetime = moment(date).format('DD MMMM YYYY');
-    const startingDate = moment(date).format('MM/DD/YYYY');
-    const starttime = moment(time).format('HH:mm A');
+        if(data.recordset.length > 0){
+            let date = data.recordset[0].StartDate;
+   
+        const startdatetime = moment(date).format('DD MMMM YYYY hh:mm A');
+        res.send({ startingDate: startdatetime });
+        }else
+        {
+            res.send({ startingDate: null});
+        }
+      
 
-    res.send({ startDateTime: startdatetime, startTime: starttime, startingDate: startingDate });
+     
+
 });
 
 
@@ -330,4 +331,7 @@ app.post('/AssessmentCategories/submit/:memberguid/:categoryid', sessionChecker,
     res.redirect("/AssessmentCategories/" + req.params.memberguid);
 });
 
-app.listen(3102, () => console.log('Example app listening on port 3102!'));
+var test = true;
+
+//app.listen(test ? 3104 : 3102, () => console.log('Example app listening on port 3102!'));
+app.listen( 3102, () => console.log('Example app listening on port 3102!'));

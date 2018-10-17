@@ -152,3 +152,16 @@
     width: 720px;
     height: 110px;
 }
+
+.bookingdate {
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 130px;
+    height: 50px;
+    background-color: #9B0000;
+    color: white;
+    width: 530px;
+    padding-left: 70px;
+    padding-top: 8px;
+}
+

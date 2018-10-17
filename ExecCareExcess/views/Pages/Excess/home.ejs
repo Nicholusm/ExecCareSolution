@@ -111,13 +111,13 @@
                                         {{exec.Name}} {{exec.Surname}}
                                     </div>
                                     <div class="datetime">
-                                        <p id="startdate">{{startdate}} {{starttime}}</p>
+                                        <p id="startdate">{{startdate ? startdate : 'Not Booked'}} </p>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
 
                                     <button type="button" class="btn btn-primary">Add</button>
-                                    <button type="button" class="btn btn-success" data-toggle="modal" v-on:click="CancelBooking()"
+                                    <button type="button" class="btn btn-success" data-toggle="modal" v-on:click="GetBooking()"
                                         data-target="#cancelbookingModal">Cancel
                                         booking</button>
                                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#reschedulemodal"
@@ -131,89 +131,91 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
 
-                    <div class="modal fade" id="reschedulemodal" tabindex="-1" role="dialog" aria-labelledby="reschedulemodal"
-                        aria-hidden="true">
-
-                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document ">
-                            <div class="modal-content" style="width:106% !important">
-                                <div class="modal-header">
-                                    <h5 class="modal-title " id="exampleModalLongTitle">Reschedule Appointment</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true ">&times;</span>
-                                    </button>
-                                </div>
-                                <div v-if="exec" class="modal-body ">
-                                    <div class="conrolpanelimg">
-                                        <img src="/ExeccareProfessionalServices/public/images/Rescedule.jpg " />
-                                    </div>
-
-                                    <div class="input-group bootstrap-timepicker timepicker">
-                                        <div class="date">
-                                            <input v-model="startingdate" id="datepicker" width="276" class="form-control" />
-                                        </div>
-
-                                        <div class="time">
-                                            <input v-model="startingtime" id="timepicker1" type="text" class="form-control input-small">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-success" v-on:click="UpDateTime()">Confirm</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                </div>
+                <div class="modal fade" id="reschedulemodal" tabindex="-1" role="dialog" aria-labelledby="reschedulemodal"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document ">
+                        <div class="modal-content" style="width:106% !important">
+                            <div class="modal-header">
+                                <h5 class="modal-title " id="exampleModalLongTitle">Cancel Booking</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true ">&times;</span>
+                                </button>
                             </div>
+                            <div class="modal-body ">
+                                <div class="conrolpanelimg">
+                                    <img src="/ExeccareProfessionalServices/public/images/Rescedule.jpg " />
+                                </div>
+
+
+                                <div class="input-group bootstrap-timepicker timepicker">
+                                    <div class="date">
+                                        <input v-model="startingdate" id="datepicker" width="276" class="form-control" />
+                                    </div>
+
+                                    <div class="time">
+                                        <input v-model="startdate" id="timepicker1" type="text" class="form-control input-small">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" v-on:click="GetBooking()">Ok</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+
                         </div>
+
                     </div>
-                    <div class="modal fade" id="cancelbookingModal" tabindex="-1" role="dialog" aria-labelledby="cancelbookingModal"
-                        aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document ">
-                            <div class="modal-content" style="width:106% !important">
-                                <div class="modal-header">
-                                    <h5 class="modal-title " id="exampleModalLongTitle">Cancel Booking</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true ">&times;</span>
-                                    </button>
+
+                </div>
+                <div class="modal fade" id="cancelbookingModal" tabindex="-1" role="dialog" aria-labelledby="cancelbookingModal"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document ">
+                        <div class="modal-content" style="width:106% !important">
+                            <div class="modal-header">
+                                <h5 class="modal-title " id="exampleModalLongTitle">Cancel Booking</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true ">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body ">
+                                <div class="conrolpanelimg">
+                                    <img src="/ExeccareProfessionalServices/public/images/CancelBooking.jpg " />
                                 </div>
-                                <div class="modal-body ">
-                                    <div class="conrolpanelimg">
-                                        <img src="/ExeccareProfessionalServices/public/images/CancelBooking.jpg " />
-                                    </div>
 
 
-                                    <div class="controlbooking">
-                                        <p>
-                                            This process can not be reverted. Please make 100% sure you want to delete
-                                            the booking and not simply change the booking. For changing booking click
-                                            on "back" and then on Edit
-                                        </p>
-
-                                    </div>
-
-                                    <div class="execdetails">
-                                        {{Name}} {{Surname}}
-                                    </div>
-                                    <div class="execdetails">
-                                        <p>Delete the booking on {{startdate}} {{starttime}}</p>
-                                        <P>
-                                            Memberid is {{Memberid}}
-                                        </P>
-                                    </div>
-
+                                <div class="controlbooking">
+                                    <p>
+                                        This process can not be reverted. Please make 100% sure you want to delete
+                                        the booking and not simply change the booking. For changing booking click
+                                        on "back" and then on Edit
+                                    </p>
 
                                 </div>
 
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-success" v-on:click="CancelBooking()">Ok</button>
-                                    <button type="button" class="btn btn-dange" data-toggle="modal" data-target="#exampleModalCenter"
-                                        v-on:click="BacktoExecutive()">Back</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <div class="execdetails">
+                                    {{Name}} {{Surname}}
+                                </div>
+                                <div class="bookingdate">
+                                    <p>Delete the booking on {{startdate}}</p>
+                                  
                                 </div>
 
+
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" v-on:click="CancelBooking()">Ok</button>
+
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             </div>
 
                         </div>
@@ -223,6 +225,8 @@
                 </div>
 
             </div>
+
+        </div>
 
         </div>
         </div>
@@ -350,9 +354,9 @@
                     axios.get('/ExeccareProfessionalServices/getDates/' + exec.MemGUID)
                         .then(response => {
 
-                            this.startdate = response.data.startDateTime;
-                            this.starttime = response.data.startTime;
-                            this.startingdate = response.data.startingDate;
+                            this.startdate = response.data.startingDate;
+
+                            console.log("***************", response.data.startingDate);
 
                         });
 
@@ -373,7 +377,7 @@
                     console.log(newDate);
                 },
 
-                CancelBooking: function (exec) {
+                GetBooking: function (exec) {
                     $('#exampleModalCenter').modal('hide');
 
                     this.Name = this.exec.Name;
@@ -381,14 +385,23 @@
                     this.Memberid = this.exec.MemberID;
                     this.startdatetime = this.exec.StartDateTime;
 
-
-                    axios.post('/ExeccareProfessionalServices/deleteDate/' + this.startdatetime + "/" + this.Memberid)
-                        .then(response => {
-
-                        });
                 },
+
                 BacktoExecutive: function () {
                     $('#cancelbookingModal').modal('hide');
+                },
+
+                CancelBooking: function (exec) {
+
+                    this.Memberid = this.exec.MemberID;
+                    this.startdatetime = this.exec.StartDateTime;
+                    axios.post('/ExeccareProfessionalServices/deleteDate/' + this.startdatetime + "/" + this.Memberid)
+                        .then(response => {   
+                            $('.loader').show();
+                            window.location = '/ExecCareProfessionalServices/adminhome';
+
+                        });
+
                 }
 
             }
@@ -407,7 +420,7 @@
             document.getElementById("mySidebar").style.display = "none";
             document.getElementById("openNav").style.display = "inline-block";
         }
-        
+
     </script>
 </body>
 
