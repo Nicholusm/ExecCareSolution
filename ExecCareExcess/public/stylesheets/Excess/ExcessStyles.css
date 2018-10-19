@@ -132,11 +132,13 @@
 .date {
     margin-left: 50px;
     margin-top: 15px;
+    font-weight: bold;
 }
 
 .time {
-    margin-left: 30px;
+    margin-left: 50px;
     margin-top: 15px;
+    font-weight: bold;
 }
 
 .gj-picker [role=body] [role=dial] {
@@ -160,8 +162,10 @@
     height: 50px;
     background-color: #9B0000;
     color: white;
-    width: 530px;
+    width: 591px;
     padding-left: 70px;
     padding-top: 8px;
 }
-
+.appointmentdatetime{
+margin-left: 100px;
+}

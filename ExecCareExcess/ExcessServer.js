@@ -194,9 +194,14 @@ app.post('/deleteDate/:startdatetime/:memberid', async (req, res, next) => {
 
     const runner = new sqlRunner();
 
-    var startDate = moment(req.params.startdatetime).format('YYYY-MM-DD HH:mm:ss');
+    let startDate = moment(req.params.startdatetime).format('YYYY-MM-DD HH:mm:ss');
+    console.log(startDate);
    
     const data = await runner.DeleteDate(startDate, req.params.memberid);
+
+    res.render('Pages/Excess/home', {
+      
+    });
 
 });
 
