@@ -325,13 +325,17 @@ function SqlRunner() {
     }
 
     //Getting Executives
-    this.GetExecutives = async (typeid, regionid, pagenumber, pagesize, search) => {
+    this.GetExecutives = async (typeid, regionid, pagenumber, pagesize, searchname,searchsurname,searchemail,searchclient,searchstatus) => {
         let result2 = await pool.getPool().request()
             .input('TypeID', sql.Int, typeid)
             .input('RegionID', sql.Int, regionid)
             .input('PageNumber', sql.Int, pagenumber)
             .input('PageSize', sql.Int, pagesize)
-            .input('search', sql.NVarChar, search)
+            .input('searchname', sql.NVarChar, searchname)
+            .input('searchsurname', sql.NVarChar, searchsurname)
+            .input('searchemail', sql.NVarChar, searchemail)
+            .input('searchclient', sql.NVarChar, searchclient)
+            .input('searchstatus', sql.NVarChar, searchstatus)
 
             .execute('ec_sp_Phase2_CallRegMembers2_1');
 
@@ -342,11 +346,16 @@ function SqlRunner() {
     }
 
     //Total Number of count
-    this.CountExecutives = async (typeid, regionid, search) => {
+    this.CountExecutives = async (typeid, regionid, searchname,searchsurname,searchemail,searchclient,searchstatus) => {
         let result2 = await pool.getPool().request()
             .input('TypeID', sql.Int, typeid)
             .input('RegionID', sql.Int, regionid)
-            .input('search', sql.NVarChar, search)
+            .input('searchname', sql.NVarChar, searchname)
+            .input('searchsurname', sql.NVarChar, searchsurname)
+            .input('searchemail', sql.NVarChar, searchemail)
+            .input('searchclient', sql.NVarChar, searchclient)
+            .input('searchstatus', sql.NVarChar, searchstatus)
+
 
             .execute('sp_Phase2_CallRegMembers2_1_count');
         let data = await result2;

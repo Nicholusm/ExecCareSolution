@@ -38,11 +38,39 @@
                         <img src="/ExeccareProfessionalServices/public/images/Dashboard.jpg" class="dashboard" />
                     </div>
 
-                    <div class="form-group row" style="margin-left:50px;padding-top: 10px;">
+                    <div class="form-group row" style="margin-left:82px;padding-top: 37px;">
 
                         <div class="col-xs-4">
-                            <label for="ex3" style="font-weight: bold;font-size: 20px;">Search</label>
-                            <input class="form-control" type="text" v-model="searcht" id="search">
+                            <label for="ex3" style="font-weight: bold;font-size: 14px;color: gray">Name</label>
+                            <input class="form-control" type="text" v-model="searchName" id="searchname">
+                        </div>
+                        <div style="padding-left: 5px;">
+
+                        </div>
+                        <div class="col-xs-4">
+                            <label for="ex3" style="font-weight: bold;font-size: 14px;color: gray">Surname</label>
+                            <input class="form-control" type="text" v-model="searchSurname" id="searchsurname">
+                        </div>
+                        <div style="padding-left: 5px;">
+
+                        </div>
+                        <div class="col-xs-4">
+                            <label for="ex3" style="font-weight: bold;font-size: 14px;color: gray">Email</label>
+                            <input class="form-control" type="text" v-model="searchEmail" id="searchemail">
+                        </div>
+                        <div style="padding-left: 5px;">
+
+                        </div>
+                        <div class="col-xs-4">
+                            <label for="ex3" style="font-weight: bold;font-size: 14px;color: gray">Client</label>
+                            <input class="form-control" type="text" v-model="searchClient" id="searchclient">
+                        </div>
+                        <div style="padding-left: 5px;">
+
+                        </div>
+                        <div class="col-xs-4">
+                            <label for="ex3" style="font-weight: bold;font-size: 14px;color: gray">Status</label>
+                            <input class="form-control" type="text" v-model="searchStatus" id="searchstatus">
                         </div>
                     </div>
 
@@ -151,26 +179,26 @@
                                 </div>
 
 
-                               <div class="appointmentdatetime">
+                                <div class="appointmentdatetime">
                                     <div class="date">
                                         <p>
                                             StartDate
                                         </p>
-                                            <input v-model="startdate" id="datepicker" width="276" class="form-control" />
-                                        </div>
-    
-                                        <div class="time">
-                                            <p>StartTime</p>
-                                            <input v-model="starttime" id="timepicker1" type="text" width="276"  class="form-control">
-                                        </div>
-                              
-                               </div>
-                                   
+                                        <input v-model="startdate" id="datepicker" width="276" class="form-control" />
+                                    </div>
+
+                                    <div class="time">
+                                        <p>StartTime</p>
+                                        <input v-model="startdate" id="timepicker" type="text" width="276" class="form-control">
+                                    </div>
+
+                                </div>
+
 
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-success" v-on:click="GetBooking()">Ok</button>
+                                <button type="button" class="btn btn-success" v-on:click="UpDateTime()">Ok</button>
 
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                             </div>
@@ -248,7 +276,7 @@
 
         const searchText = _.debounce((val) => {
 
-            app.SearchExecutives(val);
+            app.SearchExecutives();
 
         }, 300);
 
@@ -290,7 +318,11 @@
                 starttime: '',
                 startingdate: '',
                 startingtime: '',
-                searcht: '',
+                searchName: '',
+                searchSurname: '',
+                searchEmail: '',
+                searchClient: '',
+                searchStatus: '',
                 totalrecords: '',
                 displayrecords: 100,
                 pages: [],
@@ -304,10 +336,15 @@
             },
             watch: {
 
-                searcht: searchText,
+                searchName: searchText,
+                searchSurname: searchText,
+                searchEmail: searchText,
+                searchClient: searchText,
+                searchStatus: searchText,
+
                 currentPage: function (newValue) {
 
-                    this.GetExecutives(this.currentPage, this.searcht);
+                    this.GetExecutives(this.currentPage, this.searchName, this.searchSurname, this.searchEmail, this.searchClient, this.searchStatus);
 
                 }
             },
@@ -332,11 +369,17 @@
                 QueryPage: function (page) {
                     this.currentPage = page;
                 },
-                GetExecutives: function (page, search) {
+                GetExecutives: function () {
 
-                    let searchVal = search ? search : '-';
+                    let searchnameval = this.searchName ? this.searchName : '-';
+                    let searchsurnameval = this.searchSurname ? this.searchSurname : '-';
+                    let searchemailval = this.searchEmail ? this.searchEmail : '-';
+                    let searchclientval = this.searchClient ? this.searchClient : '-';
+                    let searchstatusval = this.searchStatus ? this.searchStatus : '-';
 
-                    axios.get('/ExeccareProfessionalServices/getExecutives/' + this.currentPage + "/" + searchVal)
+                      
+                    axios.get('/ExeccareProfessionalServices/getExecutives/' + this.currentPage + "/" + searchnameval + "/" + searchsurnameval + "/" + searchemailval
+                        + "/" + searchclientval + "/" + searchstatusval)
 
                         .then(response => {
                             console.log(response.data);
@@ -347,9 +390,9 @@
                         });
                 },
 
-                SearchExecutives: function (newValue) {
+                SearchExecutives: function () {
 
-                    this.GetExecutives(1, newValue);
+                    this.GetExecutives();
                 },
 
                 GetExecutive: function (exec) {
@@ -371,14 +414,15 @@
                     $('#datepicker').datepicker({
                         uiLibrary: 'bootstrap4'
                     });
-                    $('#timepicker1').timepicker();
-                    $('#timepicker1').val(this.starttime);
-                    $('#datepicker').val(this.startdate);
+                    $('#timepicker').timepicker();
+                    $('#timepicker').val(moment(this.startdate).format("HH:mm A"));
+                    $('#datepicker').val(moment(this.startdate).format('DD-MM-YYYY'));
                 },
 
                 UpDateTime: function () {
-                    const newDate = $('#datepicker').val();
-                    console.log(newDate);
+                    const newDate = $('#datepicker').val() + " " + $("#timepicker").val();
+
+                    console.log("My new appointmentdate is", newDate);
                 },
 
                 GetBooking: function (exec) {
@@ -399,11 +443,11 @@
 
                     this.Memberid = this.exec.MemberID;
                     this.startdatetime = this.exec.StartDateTime;
-              
-                  alert(this.startdatetime );
+
+                    alert(this.startdatetime);
                     axios.post('/ExeccareProfessionalServices/deleteDate/' + this.startdatetime + "/" + this.Memberid)
                         .then(response => {
-                             window.location = "/ExecCareProfessionalServices/adminhome";
+                            window.location = "/ExecCareProfessionalServices/adminhome";
                         })
 
                 }
@@ -411,7 +455,6 @@
             }
 
         });
-
 
         function w3_open() {
             document.getElementById("main").style.marginLeft = "25%";

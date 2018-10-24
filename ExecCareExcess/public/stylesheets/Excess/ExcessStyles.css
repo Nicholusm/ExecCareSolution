@@ -115,6 +115,8 @@
     top: 0px !important;
     margin-top: 101px;
     background-color: #9B0000 !important;
+    position: fixed !important;
+   
 }
 
 .gj-picker.timepicker [role=header] {
@@ -166,6 +168,12 @@
     padding-left: 70px;
     padding-top: 8px;
 }
-.appointmentdatetime{
-margin-left: 100px;
+
+.appointmentdatetime {
+    margin-left: 100px;
 }
+
+.btn btn-outline-secondary {
+    visibility: hidden;
+}
+
