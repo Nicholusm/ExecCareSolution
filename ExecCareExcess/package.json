@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "debug": "node --nolazy --inspect-brk=9229 ExcessServer.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome": "^1.1.4",
